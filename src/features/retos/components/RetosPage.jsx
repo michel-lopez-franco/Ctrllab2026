@@ -283,9 +283,9 @@ export function RetosPage() {
                           </>
                         ) : (
                           <div className="flex items-center gap-3 text-xs text-slate-400">
-                            <Badge variant="primary" size="sm" icon={<Star size={11} />}>
-                              +{ch.xpReward} XP
-                            </Badge>
+                          <Badge variant="accent" size="sm" icon={<Star size={11} className="fill-accent-400" />} className="font-bold border-accent-500/40 text-accent-300 bg-accent-500/10">
+                            +{ch.xpReward} XP
+                          </Badge>
                             <span className="flex items-center gap-1">
                               <Zap size={11} />
                               ts ≤{ch.specs.settlingTime?.max}s, Mp ≤{ch.specs.overshoot?.max}%

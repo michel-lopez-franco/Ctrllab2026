@@ -92,9 +92,9 @@ export function ModulesPage() {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-3 shrink-0">
-                <div className="flex items-center gap-3 text-sm text-slate-400">
+                <div className="flex items-center gap-3 text-sm text-slate-400 font-semibold">
                   <span className="flex items-center gap-1"><Clock size={14} /> {mod.duration}</span>
-                  <span className="flex items-center gap-1 text-primary-400"><Star size={14} /> +{mod.xp} XP</span>
+                  <span className="flex items-center gap-1 xp-badge-prize text-sm"><Star size={14} className="fill-accent-400" /> +{mod.xp} XP</span>
                 </div>
                 {mod.locked ? (
                   <Button variant="secondary" size="sm" disabled>

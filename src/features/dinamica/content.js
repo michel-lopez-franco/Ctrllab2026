@@ -16,8 +16,8 @@ export const moduleContent = {
       content: `Un **sistema dinámico** es cualquier proceso cuyo comportamiento cambia con el tiempo y puede describirse mediante ecuaciones diferenciales.
 
 En ingeniería de control nos interesan sistemas donde:
-- Hay una **entrada** u(t) que podemos manipular (voltaje, fuerza, caudal…)
-- Hay una **salida** y(t) que queremos controlar (velocidad, temperatura, posición…)
+- Hay una **entrada** $u(t)$ que podemos manipular (voltaje, fuerza, caudal…)
+- Hay una **salida** $y(t)$ que queremos controlar (velocidad, temperatura, posición…)
 - El sistema tiene **memoria**: lo que pasa ahora depende del pasado
 
 **Ejemplo cotidiano:** Un calentador de agua. La entrada es la potencia eléctrica; la salida es la temperatura. Si apagamos el calentador, el agua no se enfría instantáneamente — tiene memoria térmica.`,
@@ -29,47 +29,50 @@ En ingeniería de control nos interesan sistemas donde:
 
 **Sistema de primer orden** — un solo elemento de almacenamiento de energía:
 
-> τ · dy/dt + y = K · u(t)
+> $$ \\tau \\frac{dy(t)}{dt} + y(t) = K u(t) $$
 
-Donde τ es la constante de tiempo y K es la ganancia estática.
+Donde $\\tau$ es la constante de tiempo y $K$ es la ganancia estática.
 
 **Ejemplo — Tanque de agua:**
-La tasa de cambio del nivel h depende del caudal de entrada q_in menos el de salida:
+La tasa de cambio del nivel $h$ depende del caudal de entrada $q_{in}$ menos el de salida:
 
-> A · dh/dt = q_in − (1/R) · h
+> $$ A \\frac{dh(t)}{dt} = q_{in}(t) - \\frac{1}{R} h(t) $$
 
-Aquí A es el área del tanque y R la resistencia hidráulica.
+Aquí $A$ es el área del tanque y $R$ la resistencia hidráulica.
 
 **Sistema de segundo orden** — dos elementos de almacenamiento (masa + resorte, inductor + capacitor…):
 
-> m · ÿ + b · ẏ + k · y = F(t)
+> $$ m \\ddot{y}(t) + b \\dot{y}(t) + k y(t) = F(t) $$
 
 Esta es la ecuación masa-resorte-amortiguador. En forma estándar:
 
-> ÿ + 2ζωₙẏ + ωₙ²y = ωₙ²u
+> $$ \\ddot{y}(t) + 2\\zeta\\omega_n\\dot{y}(t) + \\omega_n^2 y(t) = \\omega_n^2 u(t) $$
 
-Donde ζ es el **coeficiente de amortiguamiento** y ωₙ la **frecuencia natural**.`,
+Donde $\\zeta$ es el **coeficiente de amortiguamiento** y $\\omega_n$ la **frecuencia natural**.`,
     },
     {
       id: 'variables-estado',
       title: 'Variables de estado',
-      content: `Las **variables de estado** son el conjunto mínimo de variables que, conocidas en t₀, permiten calcular la respuesta para todo t > t₀.
+      content: `Las **variables de estado** son el conjunto mínimo de variables que, conocidas en $t_0$, permiten calcular la respuesta para todo $t > t_0$.
 
 Para la ecuación masa-resorte-amortiguador definimos:
-- x₁ = y (posición)
-- x₂ = ẏ (velocidad)
+- $x_1 = y$ (posición)
+- $x_2 = \\dot{y}$ (velocidad)
 
 Y reescribimos como sistema de primer orden:
 
-> ẋ₁ = x₂
-> ẋ₂ = −(k/m)x₁ − (b/m)x₂ + (1/m)F
+$$
+\\begin{aligned}
+\\dot{x}_1 &= x_2 \\\\
+\\dot{x}_2 &= -\\frac{k}{m} x_1 - \\frac{b}{m} x_2 + \\frac{1}{m} F(t)
+\\end{aligned}
+$$
 
-En forma matricial **ẋ = Ax + Bu**, **y = Cx**:
+En forma matricial $\\mathbf{\\dot{x}} = \\mathbf{A}\\mathbf{x} + \\mathbf{B}u$, $y = \\mathbf{C}\\mathbf{x}$:
 
-\`\`\`
-A = [ 0        1   ]    B = [ 0   ]    C = [ 1  0 ]
-    [ -k/m   -b/m  ]        [ 1/m ]
-\`\`\`
+$$
+\\mathbf{A} = \\begin{bmatrix} 0 & 1 \\\\ -\\frac{k}{m} & -\\frac{b}{m} \\end{bmatrix}, \\quad \\mathbf{B} = \\begin{bmatrix} 0 \\\\ \\frac{1}{m} \\end{bmatrix}, \\quad \\mathbf{C} = \\begin{bmatrix} 1 & 0 \\end{bmatrix}
+$$
 
 **¿Por qué importa?** Porque el espacio de estados es la base del diseño moderno de controladores y permite representar sistemas de cualquier orden de forma sistemática.`,
     },
@@ -80,22 +83,22 @@ A = [ 0        1   ]    B = [ 0   ]    C = [ 1  0 ]
 
 La solución: **linealizar alrededor de un punto de operación** (equilibrio).
 
-Si el sistema es ẋ = f(x, u), y tiene un punto de equilibrio en (x₀, u₀) donde f(x₀, u₀) = 0, entonces para pequeñas perturbaciones δx = x − x₀ y δu = u − u₀:
+Si el sistema es $\\dot{x} = f(x, u)$, y tiene un punto de equilibrio en $(x_0, u_0)$ donde $f(x_0, u_0) = 0$, entonces para pequeñas perturbaciones $\\delta x = x - x_0$ y $\\delta u = u - u_0$:
 
-> δẋ ≈ A · δx + B · δu
+> $$ \\delta\\dot{x} \\approx A \\delta x + B \\delta u $$
 
-Donde A y B son las matrices **jacobianas** evaluadas en el punto de operación:
+Donde $A$ y $B$ son las matrices **jacobianas** evaluadas en el punto de operación:
 
-> A = ∂f/∂x |₍ₓ₀,ᵤ₀₎       B = ∂f/∂u |₍ₓ₀,ᵤ₀₎
+> $$ A = \\left. \\frac{\\partial f}{\\partial x} \\right|_{(x_0, u_0)} \\quad B = \\left. \\frac{\\partial f}{\\partial u} \\right|_{(x_0, u_0)} $$
 
 **Ejemplo — Péndulo invertido:**
-La ecuación no lineal es: θ̈ = (g/L)·sin(θ) − (b/mL²)·θ̇
+La ecuación no lineal es: $\\ddot{\\theta} = \\frac{g}{L}\\sin(\\theta) - \\frac{b}{m L^2}\\dot{\\theta}$
 
-En torno a θ₀ = 0 (posición vertical): sin(θ) ≈ θ, y se obtiene el modelo lineal:
+En torno a $\\theta_0 = 0$ (posición vertical): $\\sin(\\theta) \\approx \\theta$, y se obtiene el modelo lineal:
 
-> θ̈ = (g/L)·θ − (b/mL²)·θ̇
+> $$ \\ddot{\\theta} = \\frac{g}{L}\\theta - \\frac{b}{m L^2}\\dot{\\theta} $$
 
-Válido mientras θ sea pequeño (< 15° aproximadamente).`,
+Válido mientras $\\theta$ sea pequeño ($< 15^\\circ$ aproximadamente).`,
     },
     {
       id: 'analogias',
@@ -104,11 +107,11 @@ Válido mientras θ sea pequeño (< 15° aproximadamente).`,
 
 | Mecánico | Eléctrico | Hidráulico | Térmico |
 |----------|-----------|------------|---------|
-| Masa m | Inductancia L | Inercia fluida | Capacidad térmica |
-| Amortiguador b | Resistencia R | Resistencia hidráulica | Resistencia térmica |
-| Resorte k | Capacitor 1/C | — | — |
-| Fuerza F | Voltaje V | Presión P | Flujo de calor Q |
-| Velocidad ẋ | Corriente i | Caudal q | Temperatura T |
+| Masa $m$ | Inductancia $L$ | Inercia fluida | Capacidad térmica |
+| Amortiguador $b$ | Resistencia $R$ | Resistencia hidráulica | Resistencia térmica |
+| Resorte $k$ | Capacitor $1/C$ | — | — |
+| Fuerza $F$ | Voltaje $V$ | Presión $P$ | Flujo de calor $Q$ |
+| Velocidad $\\dot{x}$ | Corriente $i$ | Caudal $q$ | Temperatura $T$ |
 
 **Implicación práctica:** Si sabes analizar un circuito RC, ya sabes analizar un sistema térmico. El controlador que diseñas para uno funciona (con los valores correctos) para el otro.`,
     },

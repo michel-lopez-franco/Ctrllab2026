@@ -175,8 +175,8 @@ export function DashboardPage() {
                       <span className="text-2xl">{mod.icon}</span>
                       <Badge variant="default" size="sm">Módulo {i + 1}</Badge>
                     </div>
-                    <Badge variant="primary" size="sm" icon={<Star size={12} />}>
-                      +{mod.xp}
+                    <Badge variant="accent" size="sm" icon={<Star size={12} className="fill-accent-400" />} className="font-bold border-accent-500/40 text-accent-300 bg-accent-500/10 shadow-[0_0_8px_rgba(245,158,11,0.2)]">
+                      +{mod.xp} XP
                     </Badge>
                   </div>
                   

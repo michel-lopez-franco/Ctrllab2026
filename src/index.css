@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  /* Paleta de colores profesional y tranquila */
-  --color-primary-50: #f0f4ff;
-  --color-primary-100: #e0e9ff;
-  --color-primary-200: #c7d7fe;
-  --color-primary-300: #a5bbfc;
-  --color-primary-400: #8b9ff8;
-  --color-primary-500: #6b7ef1;
-  --color-primary-600: #5563e5;
-  --color-primary-700: #4650ca;
-  --color-primary-800: #3a42a3;
-  --color-primary-900: #333a81;
+  /* Paleta de colores Tecnología Energética (Cian Eléctrico y Verde Fósforo) */
+  --color-primary-50: #e0fbfc;
+  --color-primary-100: #c2f3f8;
+  --color-primary-200: #8ce7f1;
+  --color-primary-300: #4ad5e8;
+  --color-primary-400: #00f0ff;
+  --color-primary-500: #00d8e6;
+  --color-primary-600: #00b2bf;
+  --color-primary-700: #008b96;
+  --color-primary-800: #00656e;
+  --color-primary-900: #004046;
 
-  --color-secondary-50: #faf5ff;
-  --color-secondary-100: #f3e8ff;
-  --color-secondary-200: #e9d5ff;
-  --color-secondary-300: #d8b4fe;
-  --color-secondary-400: #c084fc;
-  --color-secondary-500: #a855f7;
-  --color-secondary-600: #9333ea;
-  --color-secondary-700: #7e22ce;
-  --color-secondary-800: #6b21a8;
-  --color-secondary-900: #581c87;
+  --color-secondary-50: #f5fff0;
+  --color-secondary-100: #e2ffd1;
+  --color-secondary-200: #c4ff9e;
+  --color-secondary-300: #9cff5c;
+  --color-secondary-400: #6eff1f;
+  --color-secondary-500: #39ff14;
+  --color-secondary-600: #2adb0f;
+  --color-secondary-700: #1da609;
+  --color-secondary-800: #127304;
+  --color-secondary-900: #073d01;
 
-  --color-accent-50: #ecfeff;
-  --color-accent-100: #cffafe;
-  --color-accent-200: #a5f3fc;
-  --color-accent-300: #67e8f9;
-  --color-accent-400: #22d3ee;
-  --color-accent-500: #06b6d4;
-  --color-accent-600: #0891b2;
-  --color-accent-700: #0e7490;
-  --color-accent-800: #155e75;
-  --color-accent-900: #164e63;
+  --color-accent-50: #fffdf0;
+  --color-accent-100: #fff9c4;
+  --color-accent-200: #fff59d;
+  --color-accent-300: #ffe082;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #ffb300;
+  --color-accent-600: #ffa000;
+  --color-accent-700: #ff8f00;
+  --color-accent-800: #ff6f00;
+  --color-accent-900: #e65100;
 
-  --color-success-400: #4ade80;
-  --color-success-500: #22c55e;
-  --color-success-600: #16a34a;
+  --color-success-400: #6eff1f;
+  --color-success-500: #39ff14;
+  --color-success-600: #2adb0f;
 
   --color-warning-400: #fbbf24;
   --color-warning-500: #f59e0b;
@@ -47,12 +47,12 @@
   --color-danger-500: #ef4444;
   --color-danger-600: #dc2626;
 
-  /* Superficie con mejor contraste y tonos más suaves */
-  --color-surface: #0f1419;
-  --color-surface-elevated: #1a1f2e;
-  --color-surface-hover: #252b3b;
-  --color-surface-border: #2d3548;
-  --color-surface-border-light: #3d4558;
+  /* Superficies estilo Mission Control Deck */
+  --color-surface: #04070f;
+  --color-surface-elevated: #090f1e;
+  --color-surface-hover: #111a30;
+  --color-surface-border: #182640;
+  --color-surface-border-light: #24395e;
 
   /* Tipografía */
   --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", ui-monospace, monospace;
@@ -80,10 +80,19 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(107, 126, 241, 0.2);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
   }
   50% {
-    box-shadow: 0 0 25px rgba(107, 126, 241, 0.4);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.55);
+  }
+}
+
+@keyframes pulse-glow-amber {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 9px rgba(251, 191, 36, 0.85));
   }
 }
 
@@ -121,7 +130,7 @@
 }
 
 html {
-  background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+  background: linear-gradient(135deg, #04070f 0%, #090f1e 100%);
   color: #e2e8f0;
   scroll-behavior: smooth;
 }
@@ -139,26 +148,26 @@ body {
   position: relative;
 }
 
-/* Scrollbar personalizado más sutil */
+/* Scrollbar personalizado de Tecnología Energética */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f1419;
+  background: #04070f;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #5563e5 0%, #7e22ce 100%);
+  background: linear-gradient(180deg, #00f0ff 0%, #39ff14 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #6b7ef1 0%, #9333ea 100%);
+  background: linear-gradient(180deg, #00d8e6 0%, #2adb0f 100%);
 }
 
-/* Utilidades de animación más sutiles */
+/* Utilidades de animación */
 .animate-shimmer {
   animation: shimmer 3s infinite linear;
   background: linear-gradient(
@@ -186,49 +195,69 @@ body {
   animation: scale-in 0.3s ease-out;
 }
 
-/* Efectos de glassmorphism más sutiles */
+/* Efectos de glassmorphism oscurecidos de panel de control */
 .glass {
-  background: rgba(26, 31, 46, 0.6);
+  background: rgba(9, 15, 30, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .glass-strong {
-  background: rgba(26, 31, 46, 0.85);
+  background: rgba(9, 15, 30, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Gradientes de texto más suaves */
+/* Gradientes de texto neón */
 .text-gradient {
-  background: linear-gradient(135deg, #6b7ef1 0%, #a855f7 100%);
+  background: linear-gradient(135deg, #00f0ff 0%, #39ff14 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-accent {
-  background: linear-gradient(135deg, #22d3ee 0%, #6b7ef1 100%);
+  background: linear-gradient(135deg, #fbbf24 0%, #ffa000 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Efectos hover más sutiles */
+/* Utilidades para XP de premios */
+.xp-badge-prize {
+  color: var(--color-accent-400);
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+  font-weight: 800;
+  animation: pulse-glow-amber 2s infinite ease-in-out;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.glow-amber {
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.glow-green {
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.35);
+}
+
+/* Efectos hover sutiles */
 .hover-lift {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(107, 126, 241, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.15);
 }
 
 /* Transiciones suaves globales */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

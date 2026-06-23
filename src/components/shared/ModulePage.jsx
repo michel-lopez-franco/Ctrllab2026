@@ -46,7 +46,7 @@ export function ModulePage({
             <span>·</span>
             <span className="flex items-center gap-1"><Clock size={12} /> {content.estimatedTime} min</span>
             <span>·</span>
-            <span className="flex items-center gap-1 text-primary-400"><Star size={12} /> +{content.xpReward} XP</span>
+            <span className="flex items-center gap-1 xp-badge-prize"><Star size={12} className="fill-accent-400" /> +{content.xpReward} XP</span>
           </div>
           <h2 className="text-2xl font-bold text-white">{content.title}</h2>
         </div>
@@ -120,23 +120,25 @@ function ProgressChip({ icon, label, done, total, active, onClick }) {
   const complete = done >= total
   return (
     <button onClick={onClick}
-      className={`p-3 rounded-lg border text-left transition-colors ${
-        active ? 'border-primary-500/50 bg-primary-600/10'
-        : complete ? 'border-green-500/30 bg-green-900/10'
-        : 'border-slate-700 bg-slate-800/50 hover:bg-slate-800'
+      className={`p-3 rounded-lg border text-left transition-all duration-200 cursor-pointer ${
+        active 
+          ? 'border-primary-400 bg-primary-500/10 shadow-[0_0_12px_rgba(0,240,255,0.25)]'
+          : complete 
+          ? 'border-secondary-500/30 bg-secondary-900/10 hover:shadow-[0_0_12px_rgba(0,240,255,0.15)] hover:border-primary-500/30'
+          : 'border-surface-border bg-surface-elevated/40 hover:bg-surface-hover hover:shadow-[0_0_12px_rgba(0,240,255,0.2)] hover:border-primary-500/30'
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
-        <span className={complete ? 'text-green-400' : active ? 'text-primary-400' : 'text-slate-400'}>
-          {complete ? <CheckCircle size={14} /> : icon}
+        <span className={complete ? 'text-secondary-400' : active ? 'text-primary-400' : 'text-slate-400'}>
+          {complete ? <CheckCircle size={14} className="filter drop-shadow-[0_0_3px_rgba(57,255,20,0.5)]" /> : icon}
         </span>
-        <span className={`text-xs font-medium ${complete ? 'text-green-400' : 'text-slate-300'}`}>{label}</span>
+        <span className={`text-xs font-semibold ${complete ? 'text-secondary-400' : 'text-slate-300'}`}>{label}</span>
       </div>
-      <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full transition-all ${complete ? 'bg-green-500' : 'bg-primary-500'}`}
+      <div className="h-1 bg-surface-elevated rounded-full overflow-hidden border border-surface-border/50">
+        <div className="h-full rounded-full transition-all duration-300 bg-gradient-to-r from-primary-400 to-secondary-400"
           style={{ width: `${pct}%` }} />
       </div>
-      <p className="text-xs text-slate-500 mt-1">{done}/{total}</p>
+      <p className="text-xs text-slate-500 mt-1 font-mono">{done}/{total}</p>
     </button>
   )
 }

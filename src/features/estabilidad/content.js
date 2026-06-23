@@ -23,16 +23,16 @@ Para sistemas LTI (lineales e invariantes en el tiempo), ambas definiciones coin
 
 > Un sistema LTI es estable si y solo si **todos sus polos tienen parte real negativa** (semiplano izquierdo del plano complejo).
 
-**¿Por qué?** Cada polo s = σ ± jω contribuye al transitorio con un término e^(σt)·cos(ωt). Si σ < 0, ese término decae a cero. Si σ > 0, crece exponencialmente.
+**¿Por qué?** Cada polo $s = \sigma \pm j\omega_d$ contribuye al transitorio con un término $e^{\sigma t} \cos(\omega_d t)$. Si $\sigma < 0$, ese término decae a cero. Si $\sigma > 0$, crece exponencialmente.
 
 **Casos de estabilidad:**
 
 | Posición de los polos | Comportamiento | Clasificación |
 |---|---|---|
-| Todos con Re(s) < 0 | Transitorio decae → 0 | Estable |
-| Al menos uno con Re(s) > 0 | Respuesta crece → ∞ | Inestable |
-| Polos simples en Re(s) = 0 | Oscilación sostenida | Marginalmente estable |
-| Polos repetidos en Re(s) = 0 | Crece como t·e^0 = t | Inestable |`,
+| Todos con $\text{Re}(s) < 0$ | Transitorio decae $\to 0$ | Estable |
+| Al menos uno con $\text{Re}(s) > 0$ | Respuesta crece $\to \infty$ | Inestable |
+| Polos simples en $\text{Re}(s) = 0$ | Oscilación sostenida | Marginalmente estable |
+| Polos repetidos en $\text{Re}(s) = 0$ | Crece como $t \cdot e^0 = t$ | Inestable |`,
     },
     {
       id: 'routh',
@@ -41,23 +41,23 @@ Para sistemas LTI (lineales e invariantes en el tiempo), ambas definiciones coin
 
 **Procedimiento:**
 
-Dado el polinomio característico: aₙsⁿ + aₙ₋₁sⁿ⁻¹ + ⋯ + a₁s + a₀ = 0
+Dado el polinomio característico: $$ a_n s^n + a_{n-1} s^{n-1} + \dots + a_1 s + a_0 = 0 $$
 
-**1. Condición necesaria:** Si algún coeficiente es negativo o cero (y el grado es ≥ 2), el sistema es inestable. ¡Para ahí!
+**1. Condición necesaria:** Si algún coeficiente es negativo o cero (y el grado es $\ge 2$), el sistema es inestable. ¡Para ahí!
 
 **2. Construir la tabla de Routh:**
 
-Fila 1: aₙ,  aₙ₋₂,  aₙ₋₄, …
-Fila 2: aₙ₋₁, aₙ₋₃, aₙ₋₅, …
-Fila 3: b₁ = (aₙ₋₁·aₙ₋₂ − aₙ·aₙ₋₃) / aₙ₋₁,  b₂ = (aₙ₋₁·aₙ₋₄ − aₙ·aₙ₋₅) / aₙ₋₁, …
-Fila 4: c₁ = (b₁·aₙ₋₃ − aₙ₋₁·b₂) / b₁, …
-…y así hasta completar n+1 filas.
+Fila 1: $a_n, \quad a_{n-2}, \quad a_{n-4}, \quad \dots$
+Fila 2: $a_{n-1}, \quad a_{n-3}, \quad a_{n-5}, \quad \dots$
+Fila 3: $b_1 = \frac{a_{n-1} a_{n-2} - a_n a_{n-3}}{a_{n-1}}, \quad b_2 = \frac{a_{n-1} a_{n-4} - a_n a_{n-5}}{a_{n-1}}, \quad \dots$
+Fila 4: $c_1 = \frac{b_1 a_{n-3} - a_{n-1} b_2}{b_1}, \quad \dots$
+…y así hasta completar $n+1$ filas.
 
 **3. Contar cambios de signo** en la primera columna.
 
-> Número de raíces en el semiplano derecho = número de cambios de signo en la 1ª columna
+> Número de raíces en el semiplano derecho = número de cambios de signo en la $1^{\text{a}}$ columna
 
-**Ejemplo:** s³ + 2s² + 3s + 4 = 0
+**Ejemplo:** $$ s^3 + 2s^2 + 3s + 4 = 0 $$
 
 Tabla:
 \`\`\`
@@ -66,7 +66,7 @@ s² │  2    4
 s¹ │ (2·3 − 1·4)/2 = 1    0
 s⁰ │  4
 \`\`\`
-Primera columna: [1, 2, 1, 4] — sin cambios de signo → sistema **estable**.`,
+Primera columna: $[1, 2, 1, 4]$ — sin cambios de signo $\to$ sistema **estable**.`,
     },
     {
       id: 'casos-especiales',
@@ -75,22 +75,22 @@ Primera columna: [1, 2, 1, 4] — sin cambios de signo → sistema **estable**.`
 
 **Caso 1: Primer elemento de una fila es cero (fila no nula)**
 
-Reemplazar el cero por ε → 0⁺ y continuar. El número de cambios de signo en la primera columna al evaluar ε → 0 indica el número de raíces en el semiplano derecho.
+Reemplazar el cero por $\epsilon \to 0^+$ y continuar. El número de cambios de signo en la primera columna al evaluar $\epsilon \to 0$ indica el número de raíces en el semiplano derecho.
 
-Ejemplo: s³ + s + 2 = 0
+Ejemplo: $$ s^3 + s + 2 = 0 $$
 \`\`\`
 s³ │  1    1
 s² │  0→ε  2
 s¹ │ (ε − 2)/ε → −2/ε < 0    0
 s⁰ │  2
 \`\`\`
-Columna: [1, ε>0, −2/ε<0, 2] → 2 cambios de signo → 2 raíces en RHP → **inestable**.
+Columna: $[1, \epsilon > 0, -2/\epsilon < 0, 2]$ $\to$ 2 cambios de signo $\to$ 2 raíces en RHP $\to$ **inestable**.
 
 **Caso 2: Fila de ceros**
 
-Ocurre cuando el polinomio tiene raíces simétricas respecto al origen (polos en el eje jω o pares reales ±σ). Se usa el **polinomio auxiliar** formado con la fila anterior.
+Ocurre cuando el polinomio tiene raíces simétricas respecto al origen (polos en el eje $j\omega$ o pares reales $\pm\sigma$). Se usa el **polinomio auxiliar** formado con la fila anterior.
 
-1. Derivar el polinomio auxiliar respecto a s
+1. Derivar el polinomio auxiliar respecto a $s$
 2. Usar los coeficientes de esa derivada como la fila de ceros
 3. Continuar la tabla normalmente
 
@@ -99,47 +99,47 @@ Las raíces del polinomio auxiliar son siempre raíces del sistema original (pol
     {
       id: 'plano-complejo',
       title: 'El plano complejo y los polos',
-      content: `La ubicación de los polos en el plano s = σ + jω determina todo el comportamiento transitorio.
+      content: `La ubicación de los polos en el plano $s = \sigma + j\omega$ determina todo el comportamiento transitorio.
 
 **Interpretación geométrica:**
 
-- **Eje σ (real):** determina la velocidad de decaimiento. Más negativo → decae más rápido.
-- **Eje jω (imaginario):** determina la frecuencia de oscilación. |ω| más grande → oscila más rápido.
-- **Distancia al origen (|s|):** relacionada con ωₙ = √(σ² + ω²)
-- **Ángulo con el eje negativo real:** θ = arccos(ζ), donde ζ = σ/ωₙ
+- **Eje $\sigma$ (real):** determina la velocidad de decaimiento. Más negativo $\to$ decae más rápido.
+- **Eje $j\omega$ (imaginario):** determina la frecuencia de oscilación. $|\omega|$ más grande $\to$ oscila más rápido.
+- **Distancia al origen ($|s|$):** relacionada con $\omega_n = \sqrt{\sigma^2 + \omega^2}$
+- **Ángulo con el eje negativo real:** $\theta = \arccos(\zeta)$, donde $\zeta = \sigma/\omega_n$
 
 **Regiones del plano complejo:**
 
 | Región | Tipo de polo | Comportamiento |
 |---|---|---|
-| Semiplano izquierdo (σ < 0) | Estable | Transitorio decae |
-| Eje imaginario (σ = 0) | Marginal | Oscilación sostenida |
-| Semiplano derecho (σ > 0) | Inestable | Crecimiento exponencial |
+| Semiplano izquierdo ($\sigma < 0$) | Estable | Transitorio decae |
+| Eje imaginario ($\sigma = 0$) | Marginal | Oscilación sostenida |
+| Semiplano derecho ($\sigma > 0$) | Inestable | Crecimiento exponencial |
 | Eje real negativo | Real negativo | Exponencial pura, sin oscilación |
 | Cuadrantes II y III | Complejo conjugado | Oscilación amortiguada |
 
 **Líneas de especificación:**
 
 En diseño de control, se definen regiones en el plano complejo donde deben estar los polos de lazo cerrado:
-- σ < −α: tₛ < 4/α (establecimiento rápido)
-- Ángulo > arccos(ζ_min): sobreimpulso máximo permitido
-- |s| > ωₙ_min: velocidad de respuesta mínima`,
+- $\sigma < -\alpha$: $t_s < 4/\alpha$ (establecimiento rápido)
+- Ángulo $> \arccos(\zeta_{min})$: sobreimpulso máximo permitido
+- $|s| > \omega_{n,min}$: velocidad de respuesta mínima`,
     },
     {
       id: 'margen-ganancia',
       title: 'Estabilidad condicional y margen de ganancia',
-      content: `En lazo cerrado, la estabilidad puede depender del valor de la ganancia K. El criterio de Routh permite encontrar el **valor crítico de K** que lleva el sistema al límite de la estabilidad.
+      content: `En lazo cerrado, la estabilidad puede depender del valor de la ganancia $K$. El criterio de Routh permite encontrar el **valor crítico de $K$** que lleva el sistema al límite de la estabilidad.
 
 **Procedimiento:**
 
-1. Escribir el polinomio característico en lazo cerrado en función de K
-2. Construir la tabla de Routh con K como parámetro
+1. Escribir el polinomio característico en lazo cerrado en función de $K$
+2. Construir la tabla de Routh con $K$ como parámetro
 3. Imponer que el primer elemento de alguna fila sea cero
-4. Despejar K_crítico
+4. Despejar $K_{crítico}$
 
-**Ejemplo:** G(s) = K / (s(s+2)(s+4))
+**Ejemplo:** $$ G(s) = \frac{K}{s(s+2)(s+4)} $$
 
-Polinomio característico (lazo cerrado): s³ + 6s² + 8s + K = 0
+Polinomio característico (lazo cerrado): $$ s^3 + 6s^2 + 8s + K = 0 $$
 
 Tabla de Routh:
 \`\`\`
@@ -149,12 +149,12 @@ s¹ │ (48−K)/6    0
 s⁰ │  K
 \`\`\`
 Condiciones para estabilidad:
-- (48 − K)/6 > 0  →  K < 48
-- K > 0
+- $(48 - K)/6 > 0 \to K < 48$
+- $K > 0$
 
-**Rango de estabilidad: 0 < K < 48**
+**Rango de estabilidad: $0 < K < 48$**
 
-Con K = 48 el sistema es marginalmente estable (oscilación sostenida). Con K > 48, inestable. Esto es el **margen de ganancia** en el dominio temporal.`,
+Con $K = 48$ el sistema es marginalmente estable (oscilación sostenida). Con $K > 48$, inestable. Esto es el **margen de ganancia** en el dominio temporal.`,
     },
   ],
 

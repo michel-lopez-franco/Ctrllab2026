@@ -10,9 +10,9 @@ export function ProgressBar({
   const percentage = Math.min(100, Math.max(0, (value / max) * 100))
   
   const VARIANTS = {
-    primary: 'from-primary-600 to-primary-400',
-    secondary: 'from-secondary-600 to-secondary-400',
-    accent: 'from-accent-600 to-accent-400',
+    primary: 'from-primary-400 to-secondary-400',
+    secondary: 'from-secondary-500 to-secondary-400',
+    accent: 'from-accent-500 to-accent-400',
     success: 'from-success-600 to-success-400',
     warning: 'from-warning-600 to-warning-400',
     danger: 'from-danger-600 to-danger-400',
@@ -73,9 +73,9 @@ export function CircularProgress({
   const offset = circumference - (percentage / 100) * circumference
 
   const COLORS = {
-    primary: '#6366f1',
-    secondary: '#d946ef',
-    accent: '#22d3ee',
+    primary: '#00f0ff',
+    secondary: '#39ff14',
+    accent: '#ffb300',
     success: '#22c55e',
     warning: '#f59e0b',
     danger: '#ef4444',

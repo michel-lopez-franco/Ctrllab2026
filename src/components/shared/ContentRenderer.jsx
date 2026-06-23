@@ -1,12 +1,16 @@
-// Minimal markdown renderer: **bold**, `code`, tables, > blockquotes, ``` code blocks
+import { InlineMath, BlockMath } from 'react-katex'
+import 'katex/dist/katex.min.css'
 
+// Minimal markdown renderer: **bold**, `code`, tables, > blockquotes, ``` code blocks, and $math$ formulas
 function inlineFormat(text) {
-  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/)
+  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`|\$[^\$]+\$)/)
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**'))
       return <strong key={i} className="text-white font-semibold">{part.slice(2, -2)}</strong>
     if (part.startsWith('`') && part.endsWith('`'))
-      return <code key={i} className="bg-slate-800 text-cyan-300 px-1.5 py-0.5 rounded text-xs font-mono">{part.slice(1, -1)}</code>
+      return <code key={i} className="bg-surface-elevated text-primary-300 px-1.5 py-0.5 rounded text-xs font-mono">{part.slice(1, -1)}</code>
+    if (part.startsWith('$') && part.endsWith('$'))
+      return <InlineMath key={i} math={part.slice(1, -1)} />
     return part
   })
 }
@@ -53,17 +57,58 @@ export function ContentRenderer({ text }) {
       while (i < lines.length && !lines[i].startsWith('```')) { codeLines.push(lines[i]); i++ }
       i++
       elements.push(
-        <pre key={`code-${i}`} className="bg-slate-900 border border-slate-700 rounded-lg p-4 text-xs font-mono text-cyan-300 overflow-x-auto my-4 leading-relaxed">
+        <pre key={`code-${i}`} className="bg-slate-900 border border-surface-border rounded-lg p-4 text-xs font-mono text-primary-300 overflow-x-auto my-4 leading-relaxed">
           {codeLines.join('\n')}
         </pre>
       )
       continue
     }
 
+    // Support block math block: $$ ... $$
+    if (line.trim() === '$$') {
+      const mathLines = []
+      i++
+      while (i < lines.length && lines[i].trim() !== '$$') {
+        mathLines.push(lines[i])
+        i++
+      }
+      i++
+      elements.push(
+        <div key={`math-${i}`} className="my-4 overflow-x-auto text-center py-2">
+          <BlockMath math={mathLines.join('\n')} />
+        </div>
+      )
+      continue
+    }
+
+    // Support single-line block math: $$math$$
+    if (line.trim().startsWith('$$') && line.trim().endsWith('$$') && line.trim().length > 4) {
+      const math = line.trim().slice(2, -2).trim()
+      elements.push(
+        <div key={`math-sl-${i}`} className="my-4 overflow-x-auto text-center py-2">
+          <BlockMath math={math} />
+        </div>
+      )
+      i++
+      continue
+    }
+
+    // Support block math inside blockquote: > $$math$$
+    if (line.startsWith('> $$') && line.endsWith('$$')) {
+      const math = line.slice(4, -2).trim()
+      elements.push(
+        <div key={`bq-math-${i}`} className="my-4 pl-4 border-l-2 border-primary-500 bg-primary-500/5 rounded-r-lg py-3 pr-3 text-center overflow-x-auto">
+          <BlockMath math={math} />
+        </div>
+      )
+      i++
+      continue
+    }
+
     if (line.startsWith('> ')) {
       elements.push(
-        <div key={`bq-${i}`} className="my-3 pl-4 border-l-2 border-primary-500 bg-primary-900/10 rounded-r-lg py-2 pr-3">
-          <code className="text-primary-300 text-sm font-mono">{line.slice(2)}</code>
+        <div key={`bq-${i}`} className="my-3 pl-4 border-l-2 border-primary-500 bg-primary-500/5 rounded-r-lg py-2 pr-3">
+          <span className="text-slate-300 text-sm leading-relaxed">{inlineFormat(line.slice(2))}</span>
         </div>
       )
       i++; continue

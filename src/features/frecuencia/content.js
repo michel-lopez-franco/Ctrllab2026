@@ -15,13 +15,13 @@ export const moduleContent = {
       title: 'Respuesta en frecuencia',
       content: `Hasta ahora analizamos sistemas observando cómo responden al tiempo (escalón, rampa). El **análisis en frecuencia** nos da una perspectiva complementaria: ¿cómo responde el sistema ante señales sinusoidales de distinta frecuencia?
 
-**Principio fundamental:** Para un sistema LTI estable, si la entrada es u(t) = A·sin(ωt), la salida en estado estacionario es:
+**Principio fundamental:** Para un sistema LTI estable, si la entrada es $u(t) = A \sin(\omega t)$, la salida en estado estacionario es:
 
-> y(t) = A·|G(jω)|·sin(ωt + ∠G(jω))
+> $$ y(t) = A |G(j\omega)| \sin(\omega t + \angle G(j\omega)) $$
 
-El sistema no cambia la frecuencia: solo modifica la **amplitud** (por el factor |G(jω)|) y el **desfase** (por el ángulo ∠G(jω)).
+El sistema no cambia la frecuencia: solo modifica la **amplitud** (por el factor $|G(j\omega)|$) y el **desfase** (por el ángulo $\angle G(j\omega)$).
 
-Evaluar G(jω) para distintos valores de ω traza la **respuesta en frecuencia** del sistema. Esta caracterización tiene ventajas prácticas enormes:
+Evaluar $G(j\omega)$ para distintos valores de $\omega$ traza la **respuesta en frecuencia** del sistema. Esta caracterización tiene ventajas prácticas enormes:
 - Permite identificar sistemas experimentalmente (barrido sinusoidal)
 - Revela directamente el ancho de banda del sistema
 - Los criterios de estabilidad son gráficos e intuitivos
@@ -32,106 +32,106 @@ Evaluar G(jω) para distintos valores de ω traza la **respuesta en frecuencia**
       title: 'Diagrama de Bode',
       content: `El diagrama de Bode representa la respuesta en frecuencia en dos gráficas separadas, usando **escala logarítmica en frecuencia**:
 
-**Magnitud:** |G(jω)|_dB = 20·log₁₀|G(jω)|  vs.  log₁₀(ω)
-**Fase:**     ∠G(jω) [grados]               vs.  log₁₀(ω)
+**Magnitud:** $|G(j\omega)|_{\text{dB}} = 20 \log_{10} |G(j\omega)|$ vs. $\log_{10}(\omega)$
+**Fase:** $\angle G(j\omega)$ [grados] vs. $\log_{10}(\omega)$
 
-La escala logarítmica convierte productos en sumas: si G(s) = G₁(s)·G₂(s), entonces:
+La escala logarítmica convierte productos en sumas: si $G(s) = G_1(s) \cdot G_2(s)$, entonces:
 
-> |G|_dB = |G₁|_dB + |G₂|_dB
-> ∠G = ∠G₁ + ∠G₂
+> $$ |G|_{\text{dB}} = |G_1|_{\text{dB}} + |G_2|_{\text{dB}} $$
+> $$ \angle G = \angle G_1 + \angle G_2 $$
 
-Esto permite construir el Bode de G sumando los diagramas de sus factores individuales.
+Esto permite construir el Bode de $G$ sumando los diagramas de sus factores individuales.
 
 **Factores elementales y sus efectos:**
 
 | Factor | Magnitud | Fase |
 |--------|---------|------|
-| Ganancia K | 20·log₁₀K dB (línea horizontal) | 0° (ó ±180° si K<0) |
-| Integrador 1/s | −20 dB/dec, pasa por 0 dB en ω=1 | −90° constante |
-| Polo real 1/(τs+1) | 0 dB para ω≪1/τ, −20 dB/dec para ω≫1/τ | 0° a −90° centrado en 1/τ |
-| Cero real (τs+1) | +20 dB/dec para ω≫1/τ | 0° a +90° |
-| Par complejo | −40 dB/dec, pico de resonancia en ωₙ | 0° a −180° |
+| Ganancia $K$ | $20 \log_{10} K\text{ dB}$ (línea horizontal) | $0^\circ$ (ó $\pm 180^\circ$ si $K<0$) |
+| Integrador $1/s$ | $-20\text{ dB/dec}$, pasa por $0\text{ dB}$ en $\omega=1$ | $-90^\circ$ constante |
+| Polo real $1/(\tau s+1)$ | $0\text{ dB}$ para $\omega \ll 1/\tau$, $-20\text{ dB/dec}$ para $\omega \gg 1/\tau$ | $0^\circ$ a $-90^\circ$ centrado en $1/\tau$ |
+| Cero real $(\tau s+1)$ | $+20\text{ dB/dec}$ para $\omega \gg 1/\tau$ | $0^\circ$ a $+90^\circ$ |
+| Par complejo | $-40\text{ dB/dec}$, pico de resonancia en $\omega_n$ | $0^\circ$ a $-180^\circ$ |
 
-**Frecuencia de quiebre** (corner frequency): ω_c = 1/τ para un polo/cero de primer orden. Ahí la aproximación asintótica comete un error de exactamente −3 dB (para un polo).`,
+**Frecuencia de quiebre** (corner frequency): $\omega_c = 1/\tau$ para un polo/cero de primer orden. Ahí la aproximación asintótica comete un error de exactamente $-3\text{ dB}$ (para un polo).`,
     },
     {
       id: 'margenes',
       title: 'Márgenes de estabilidad',
       content: `Los márgenes de estabilidad miden cuánto puede degradarse el sistema en lazo abierto antes de volverse inestable en lazo cerrado.
 
-**Margen de fase (PM — Phase Margin):**
+**Margen de fase ($\text{PM}$ — Phase Margin):**
 
-> PM = 180° + ∠G(jω_gc)
+> $$ \text{PM} = 180^\circ + \angle G(j\omega_{gc}) $$
 
-Donde ω_gc es la **frecuencia de cruce de ganancia** (donde |G(jω)| = 1, es decir 0 dB).
+Donde $\omega_{gc}$ es la **frecuencia de cruce de ganancia** (donde $|G(j\omega)| = 1$, es decir $0\text{ dB}$).
 
-El PM indica cuántos grados adicionales de desfase toleraría el sistema antes de llegar a −180° (inestabilidad). Un sistema con PM = 45° puede absorber 45° más de retardo de fase.
+El $\text{PM}$ indica cuántos grados adicionales de desfase toleraría el sistema antes de llegar a $-180^\circ$ (inestabilidad). Un sistema con $\text{PM} = 45^\circ$ puede absorber $45^\circ$ más de retardo de fase.
 
-**Margen de ganancia (GM — Gain Margin):**
+**Margen de ganancia ($\text{GM}$ — Gain Margin):**
 
-> GM [dB] = −|G(jω_pc)|_dB
+> $$ \text{GM}_{\text{dB}} = -|G(j\omega_{pc})|_{\text{dB}} $$
 
-Donde ω_pc es la **frecuencia de cruce de fase** (donde ∠G = −180°).
+Donde $\omega_{pc}$ es la **frecuencia de cruce de fase** (donde $\angle G = -180^\circ$).
 
-El GM indica cuántos dB de ganancia adicional toleraría el sistema antes de inestabilizarse.
+El $\text{GM}$ indica cuántos $\text{dB}$ de ganancia adicional toleraría el sistema antes de inestabilizarse.
 
 **Reglas prácticas de diseño:**
 
 | Especificación | Valor típico |
 |---|---|
-| Margen de fase mínimo | 30° – 45° |
-| Margen de ganancia mínimo | 6 – 12 dB |
-| Relación PM ↔ sobreimpulso | PM ≈ 100·ζ (°) para ζ < 0.7 |
+| Margen de fase mínimo | $30^\circ$ – $45^\circ$ |
+| Margen de ganancia mínimo | $6$ – $12\text{ dB}$ |
+| Relación $\text{PM} \leftrightarrow$ sobreimpulso | $\text{PM} \approx 100\zeta\ (^\circ)$ para $\zeta < 0.7$ |
 
-Un sistema con PM = 60° y GM = 12 dB se considera **robusto**. Con PM < 30° el sistema puede volverse inestable ante pequeñas perturbaciones o variaciones del modelo.`,
+Un sistema con $\text{PM} = 60^\circ$ y $\text{GM} = 12\text{ dB}$ se considera **robusto**. Con $\text{PM} < 30^\circ$ el sistema puede volverse inestable ante pequeñas perturbaciones o variaciones del modelo.`,
     },
     {
       id: 'nyquist',
       title: 'Diagrama de Nyquist',
-      content: `El diagrama de Nyquist traza la curva G(jω) en el **plano complejo** para ω de −∞ a +∞. Es la representación polar de la respuesta en frecuencia.
+      content: `El diagrama de Nyquist traza la curva $G(j\omega)$ en el **plano complejo** para $\omega$ de $-\infty$ a $+\infty$. Es la representación polar de la respuesta en frecuencia.
 
 Puntos clave del diagrama:
-- El punto (−1, 0j) es la **frontera crítica de estabilidad**
-- La distancia del diagrama al punto −1 determina los márgenes
-- Para ω → 0⁺: el punto de partida es G(0) = ganancia estática
-- Para ω → ∞: G(jω) → 0 (para sistemas propios)
+- El punto $(-1, 0j)$ es la **frontera crítica de estabilidad**
+- La distancia del diagrama al punto $-1$ determina los márgenes
+- Para $\omega \to 0^+$: el punto de partida es $G(0) = \text{ganancia estática}$
+- Para $\omega \to \infty$: $G(j\omega) \to 0$ (para sistemas propios)
 
 **Criterio de Nyquist simplificado** (para sistemas de lazo abierto estables):
 
-> El sistema en lazo cerrado es estable si y solo si el diagrama de Nyquist de G(jω)·H(jω) **no encierra** el punto (−1, 0).
+> El sistema en lazo cerrado es estable si y solo si el diagrama de Nyquist de $G(j\omega)H(j\omega)$ **no encierra** el punto $(-1, 0)$.
 
-Si la curva pasa por la derecha del punto −1, el sistema lazo cerrado es estable.
+Si la curva pasa por la derecha del punto $-1$, el sistema lazo cerrado es estable.
 
 **Margen de fase en Nyquist:**
 Es el ángulo entre el eje real negativo y el vector desde el origen al punto donde el diagrama cruza el círculo unitario.
 
 **Margen de ganancia en Nyquist:**
-Es 1/|G(jω_pc)|, la distancia recíproca desde el origen al punto donde el diagrama cruza el eje real negativo.`,
+Es $1/|G(j\omega_{pc})|$, la distancia recíproca desde el origen al punto donde el diagrama cruza el eje real negativo.`,
     },
     {
       id: 'ancho-banda',
       title: 'Ancho de banda y velocidad de respuesta',
-      content: `El **ancho de banda** (BW) de un sistema es la frecuencia ω_BW donde la magnitud cae 3 dB por debajo de su valor en DC (baja frecuencia).
+      content: `El **ancho de banda** ($\text{BW}$) de un sistema es la frecuencia $\omega_{\text{BW}}$ donde la magnitud cae $3\text{ dB}$ por debajo de su valor en DC (baja frecuencia).
 
-> |G(jω_BW)| = |G(0)| / √2  →  magnitud −3 dB respecto al DC
+> $$ |G(j\omega_{\text{BW}})| = \frac{|G(0)|}{\sqrt{2}} \quad (\text{magnitud } -3\text{ dB respecto al DC}) $$
 
 **Relación con la respuesta temporal:**
-- BW alto → sistema rápido (tiempo de subida pequeño): BW ≈ 1.8/tᵣ
-- BW bajo → sistema lento pero que filtra bien el ruido
+- $\text{BW}$ alto $\to$ sistema rápido (tiempo de subida pequeño): $\text{BW} \approx 1.8/t_r$
+- $\text{BW}$ bajo $\to$ sistema lento pero que filtra bien el ruido
 
-Para un sistema de segundo orden estándar G(s) = ωₙ²/(s² + 2ζωₙs + ωₙ²):
+Para un sistema de segundo orden estándar $G(s) = \frac{\omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}$:
 
-> BW = ωₙ · √(1 − 2ζ² + √(4ζ⁴ − 4ζ² + 2))
+> $$ \text{BW} = \omega_n \sqrt{(1 - 2\zeta^2) + \sqrt{4\zeta^4 - 4\zeta^2 + 2}} $$
 
-Para ζ = 0.7: BW ≈ 1.27·ωₙ (muy próximo a ωₙ).
+Para $\zeta = 0.7$: $\text{BW} \approx 1.27\omega_n$ (muy próximo a $\omega_n$).
 
 **Tradeoff fundamental:**
-- Mayor BW → mayor velocidad de respuesta, pero más susceptibilidad al ruido de alta frecuencia
-- Menor BW → mayor filtrado de ruido, pero respuesta más lenta
+- Mayor $\text{BW}$ $\to$ mayor velocidad de respuesta, pero más susceptibilidad al ruido de alta frecuencia
+- Menor $\text{BW}$ $\to$ mayor filtrado de ruido, pero respuesta más lenta
 - El diseño de controladores siempre balancea estos dos objetivos
 
 **Sensibilidad a la frecuencia:**
-La función de sensibilidad S(s) = 1/(1+G(s)) determina qué tan bien el sistema rechaza perturbaciones en cada frecuencia. El pico de |S(jω)| está directamente relacionado con el margen de fase.`,
+La función de sensibilidad $S(s) = \frac{1}{1+G(s)}$ determina qué tan bien el sistema rechaza perturbaciones en cada frecuencia. El pico de $|S(j\omega)|$ está directamente relacionado con el margen de fase.`,
     },
   ],
 

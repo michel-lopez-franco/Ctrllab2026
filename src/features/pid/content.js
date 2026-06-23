@@ -17,36 +17,36 @@ export const moduleContent = {
       content: `
 ## ¿Qué es un controlador PID?
 
-El controlador PID (Proporcional-Integral-Derivativo) es el algoritmo de control más utilizado en la industria. Estima que más del **95%** de los lazos de control industriales usan alguna variante de este esquema.
+El controlador PID (Proporcional-Integral-Derivativo) es el algoritmo de control más utilizado en la industria. Se estima que más del **95%** de los lazos de control industriales usan alguna variante de este esquema.
 
 Su ley de control en el dominio del tiempo es:
 
-\`u(t) = Kp · e(t) + Ki · ∫e(τ)dτ + Kd · de(t)/dt\`
+$$ u(t) = K_p e(t) + K_i \\int_{0}^{t} e(\\tau)d\\tau + K_d \\frac{de(t)}{dt} $$
 
-donde \`e(t) = r(t) − y(t)\` es el error entre la referencia **r** y la salida medida **y**.
+donde $e(t) = r(t) - y(t)$ es el error entre la referencia $r$ y la salida medida $y$.
 
 En el dominio de Laplace, la función de transferencia del controlador es:
 
-\`C(s) = Kp + Ki/s + Kd·s\`
+$$ C(s) = K_p + \\frac{K_i}{s} + K_d s $$
 
 o equivalentemente en forma paralela estándar:
 
-\`C(s) = Kp (1 + 1/(Ti·s) + Td·s)\`
+$$ C(s) = K_p \\left(1 + \\frac{1}{T_i s} + T_d s\\right) $$
 
 ### Diagrama de lazo cerrado
 
-> **r(t)** → [+] → C(s) → u(t) → P(s) → y(t)
+> $r(t)$ $\\to$ [+] $\\to$ $C(s)$ $\\to$ $u(t)$ $\\to$ $P(s)$ $\\to$ $y(t)$
 >              [−]  ↑________________________|
 
-El error \`e(t)\` entra al controlador. La salida \`u(t)\` (señal de control) actúa sobre la planta \`P(s)\`, y la salida \`y(t)\` regresa al punto de suma.
+El error $e(t)$ entra al controlador. La salida $u(t)$ (señal de control) actúa sobre la planta $P(s)$, y la salida $y(t)$ regresa al punto de suma.
 
 ### Tres acciones en resumen
 
 | Acción | Término | Efecto principal |
 |--------|---------|-----------------|
-| Proporcional | Kp · e | Respuesta inmediata al error |
-| Integral | Ki · ∫e dt | Elimina error en estado estacionario |
-| Derivativa | Kd · ė | Amortigua oscilaciones, predice error |
+| Proporcional | $K_p e$ | Respuesta inmediata al error |
+| Integral | $K_i \\int e(t) dt$ | Elimina error en estado estacionario |
+| Derivativa | $K_d \\dot{e}$ | Amortigua oscilaciones, predice error |
 `,
     },
     {
@@ -57,30 +57,30 @@ El error \`e(t)\` entra al controlador. La salida \`u(t)\` (señal de control) a
 
 La acción proporcional genera una señal de control **proporcional al error actual**:
 
-\`u_P(t) = Kp · e(t)\`
+$$ u_P(t) = K_p e(t) $$
 
-### Efecto al variar Kp
+### Efecto al variar $K_p$
 
-| Kp ↑ | Efecto |
+| $K_p$ | Efecto |
 |------|--------|
 | Velocidad de respuesta | Aumenta |
 | Sobreimpulso | Aumenta |
 | Error de estado estacionario | Disminuye (pero no desaparece) |
-| Estabilidad | Puede deteriorarse para Kp muy alto |
+| Estabilidad | Puede deteriorarse para $K_p$ muy alto |
 
 ### Error de estado estacionario con solo P
 
-Para una planta de primer orden \`G(s) = K/(τs+1)\` con controlador proporcional puro:
+Para una planta de primer orden $G(s) = \\frac{K}{\\tau s + 1}$ con controlador proporcional puro:
 
-\`e_ss = 1 / (1 + Kp·K)\`
+$$ e_{ss} = \\frac{1}{1 + K_p K} $$
 
 Nunca llega a cero con control P puro en una planta tipo 0.
 
-### Ganancia última (Ku)
+### Ganancia última ($K_u$)
 
-Existe un valor crítico de Kp para el que el sistema oscila de manera sostenida (margen de estabilidad = 0). Este valor se llama **ganancia última Ku** y es la base del método de Ziegler-Nichols de lazo cerrado.
+Existe un valor crítico de $K_p$ para el que el sistema oscila de manera sostenida (margen de estabilidad = 0). Este valor se llama **ganancia última $K_u$** y es la base del método de Ziegler-Nichols de lazo cerrado.
 
-> **Consejo práctico**: Kp debe ser lo suficientemente grande para reducir el error, pero no tan grande que cause oscilaciones persistentes. Un buen punto de partida es Kp ≈ Ku/3.
+> **Consejo práctico**: $K_p$ debe ser lo suficientemente grande para reducir el error, pero no tan grande que cause oscilaciones persistentes. Un buen punto de partida es $K_p \\approx K_u/3$.
 `,
     },
     {
@@ -91,7 +91,7 @@ Existe un valor crítico de Kp para el que el sistema oscila de manera sostenida
 
 La acción integral **acumula** el error en el tiempo:
 
-\`u_I(t) = Ki · ∫₀ᵗ e(τ) dτ\`
+$$ u_I(t) = K_i \\int_{0}^{t} e(\\tau) d\\tau $$
 
 **Beneficio**: elimina el error de estado estacionario en plantas tipo 0 (el integrador fuerza el error a cero en régimen permanente).
 
@@ -107,21 +107,21 @@ La acción integral **acumula** el error en el tiempo:
 
 La acción derivativa reacciona a la **velocidad de cambio** del error:
 
-\`u_D(t) = Kd · de(t)/dt\`
+$$ u_D(t) = K_d \\frac{de(t)}{dt} $$
 
 **Beneficio**: efecto amortiguante, similar a añadir un "cojín" al sistema. Reduce el sobreimpulso y acorta el tiempo de asentamiento.
 
 **Riesgos prácticos**:
-- **Amplifica el ruido**: el ruido de alta frecuencia, derivado, genera señales de control muy grandes. Por eso en la práctica se aplica un filtro: \`C_D(s) = Kd·s / (τf·s + 1)\`
-- **Kick derivativo**: si la referencia cambia escalón, el término derivativo ve una derivada infinita y genera un impulso en la señal de control. Solución: derivar solo la salida, no el error.
+- **Amplifica el ruido**: el ruido de alta frecuencia, derivado, genera señales de control muy grandes. Por eso en la práctica se aplica un filtro: $C_D(s) = \\frac{K_d s}{\\tau_f s + 1}$
+- **Kick derivativo**: si la referencia cambia como un escalón, el término derivativo ve una derivada infinita y genera un impulso en la señal de control. Solución: derivar solo la salida, no el error.
 
 ### Resumen de acciones
 
 \`\`\`
-           Sobreimpulso   Velocidad   Error SS   Estabilidad
-Kp ↑           ↑            ↑          ↓           ↓
-Ki ↑           ↑↑           ↑         → 0          ↓↓
-Kd ↑           ↓            ↑ (leve)   —            ↑
+            Sobreimpulso   Velocidad   Error SS   Estabilidad
+$K_p \\uparrow$           ↑            ↑          ↓           ↓
+$K_i \\uparrow$           ↑↑           ↑         → 0          ↓↓
+$K_d \\uparrow$           ↓            ↑ (leve)   —            ↑
 \`\`\`
 `,
     },
@@ -131,60 +131,60 @@ Kd ↑           ↓            ↑ (leve)   —            ↑
       content: `
 ## ¿Qué es sintonizar un PID?
 
-Sintonizar es encontrar los valores de Kp, Ki, Kd que hacen que el sistema en lazo cerrado cumpla especificaciones: tiempo de asentamiento, sobreimpulso máximo, error estacionario.
+Sintonizar es encontrar los valores de $K_p$, $K_i$, $K_d$ que hacen que el sistema en lazo cerrado cumpla especificaciones: tiempo de asentamiento, sobreimpulso máximo, error estacionario.
 
 ---
 
 ## 1. Ziegler-Nichols — Método de lazo cerrado
 
 **Procedimiento**:
-1. Usar solo control proporcional (Ki = Kd = 0).
-2. Aumentar Kp lentamente hasta que el sistema oscile sostenidamente.
-3. Registrar la **ganancia última Ku** y el **período de oscilación Tu**.
+1. Usar solo control proporcional ($K_i = K_d = 0$).
+2. Aumentar $K_p$ lentamente hasta que el sistema oscile sostenidamente.
+3. Registrar la **ganancia última $K_u$** y el **período de oscilación $T_u$**.
 4. Aplicar las fórmulas:
 
-| Tipo | Kp | Ti | Td |
+| Tipo | $K_p$ | $T_i$ | $T_d$ |
 |------|----|----|-----|
-| P | 0.5 Ku | — | — |
-| PI | 0.45 Ku | Tu/1.2 | — |
-| PID | 0.6 Ku | Tu/2 | Tu/8 |
+| P | $0.5 K_u$ | — | — |
+| PI | $0.45 K_u$ | $T_u/1.2$ | — |
+| PID | $0.6 K_u$ | $T_u/2$ | $T_u/8$ |
 
-**Resultado típico**: sobreimpulso ≈ 25%, respuesta rápida pero oscilante. Requiere ajuste fino posterior.
+**Resultado típico**: sobreimpulso $\\approx 25\\%$, respuesta rápida pero oscilante. Requiere ajuste fino posterior.
 
 ---
 
 ## 2. Ziegler-Nichols — Método de la curva de reacción
 
-Para plantas que se pueden modelar como **K·e⁻ᴸˢ/(Ts+1)**:
-1. Aplicar un escalón escalón en lazo abierto y registrar la respuesta.
-2. Trazar la tangente en el punto de inflexión: determinar L (tiempo muerto) y T (constante de tiempo).
-3. K = ΔY/ΔU (ganancia de la planta).
+Para plantas que se pueden modelar como $G(s) = \\frac{K e^{-Ls}}{T s + 1}$:
+1. Aplicar un escalón en lazo abierto y registrar la respuesta.
+2. Trazar la tangente en el punto de inflexión: determinar $L$ (tiempo muerto) y $T$ (constante de tiempo).
+3. $K = \\frac{\\Delta Y}{\\Delta U}$ (ganancia de la planta).
 
 **Fórmulas**:
 
-| Tipo | Kp | Ti | Td |
+| Tipo | $K_p$ | $T_i$ | $T_d$ |
 |------|----|----|-----|
-| P | T/(K·L) | — | — |
-| PI | 0.9T/(K·L) | 3.3L | — |
-| PID | 1.2T/(K·L) | 2L | 0.5L |
+| P | $\\frac{T}{K L}$ | — | — |
+| PI | $\\frac{0.9 T}{K L}$ | $3.3 L$ | — |
+| PID | $\\frac{1.2 T}{K L}$ | $2 L$ | $0.5 L$ |
 
 ---
 
 ## 3. IMC (Internal Model Control)
 
-Basado en el modelo inverso de la planta. El parámetro de sintonía es **λ** (tiempo de respuesta deseado):
+Basado en el modelo inverso de la planta. El parámetro de sintonía es $\\lambda$ (tiempo de respuesta deseado):
 
-\`Kp = (2T + L) / (2K(λ + L/2))\`
-\`Ti = T + L/2\`
-\`Td = T·L / (2T + L)\`
+$$ K_p = \\frac{2T + L}{2K(\\lambda + L/2)} $$
+$$ T_i = T + \\frac{L}{2} $$
+$$ T_d = \\frac{T L}{2T + L} $$
 
-**Regla de oro**: λ ≥ max(0.1T, 0.8L). Un λ más grande = respuesta más lenta y robusta.
+**Regla de oro**: $\\lambda \\ge \\max(0.1T, 0.8L)$. Un $\\lambda$ más grande = respuesta más lenta y robusta.
 
 ---
 
 ## 4. Criterio ITAE (Integral del Error Absoluto Ponderado por el Tiempo)
 
-Minimiza \`ITAE = ∫₀^∞ t·|e(t)|dt\`. Penaliza más el error tardío, produciendo respuestas con bajo sobreimpulso.
+Minimiza $\\text{ITAE} = \\int_{0}^{\\infty} t |e(t)| dt$. Penaliza más el error tardío, produciendo respuestas con bajo sobreimpulso.
 
 Los coeficientes óptimos ITAE están tabulados en función del orden de la planta.
 `,
@@ -208,15 +208,15 @@ if (u_sat != u_pid):
 
 El término derivativo amplifica el ruido de alta frecuencia. Siempre se filtra:
 
-\`C_D(s) = Kd·s / (τ_f·s + 1)\`
+$$ C_D(s) = \\frac{K_d s}{\\tau_f s + 1} $$
 
-donde \`τ_f ≈ Td/10\` es un filtro de primer orden. Equivale a una frecuencia de corte \`ω_c = 10/Td\`.
+donde $\\tau_f \\approx T_d/10$ es un filtro de primer orden. Equivale a una frecuencia de corte $\\omega_c = 10/T_d$.
 
 ### 3. Kick derivativo
 
-Cuando la referencia cambia bruscamente, el derivativo de **e(t)** produce un impulso. Solución: calcular la derivada de la salida \`y(t)\` en lugar del error:
+Cuando la referencia cambia bruscamente, el derivativo de $e(t)$ produce un impulso. Solución: calcular la derivada de la salida $y(t)$ en lugar del error:
 
-\`u_D(t) = −Kd · dy(t)/dt\`
+$$ u_D(t) = -K_d \\frac{dy(t)}{dt} $$
 
 Esto se llama **"D en la medición"**.
 
@@ -226,17 +226,17 @@ En sistemas multivariable, un solo PID no es suficiente. Se necesitan técnicas 
 
 ### 5. Cuándo el PID no es suficiente
 
-- Plantas con tiempo muerto grande (L/T > 0.5): usar Smith Predictor.
+- Plantas con tiempo muerto grande ($L/T > 0.5$): usar Smith Predictor.
 - Plantas no lineales severas: linealizar o usar control adaptivo.
-- Requisitos muy estrictos de robustez: control H∞ o µ-síntesis.
+- Requisitos muy estrictos de robustez: control $H_\\infty$ o $\\mu$-síntesis.
 
 ---
 
 ## Forma de velocidad vs. posición
 
-La **forma de posición** calcula u directamente. La **forma de velocidad** (incremental) calcula Δu:
+La **forma de posición** calcula $u$ directamente. La **forma de velocidad** (incremental) calcula $\\Delta u$:
 
-\`Δu(k) = Kp·[e(k)−e(k−1)] + Ki·Ts·e(k) + (Kd/Ts)·[e(k)−2e(k−1)+e(k−2)]\`
+$$ \\Delta u(k) = K_p [e(k) - e(k-1)] + K_i T_s e(k) + \\frac{K_d}{T_s} [e(k) - 2e(k-1) + e(k-2)] $$
 
 La forma de velocidad **previene automáticamente el wind-up** porque integra incrementalmente y naturalmente queda limitada por los actuadores.
 `,

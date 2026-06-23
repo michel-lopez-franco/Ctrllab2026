@@ -65,7 +65,7 @@ export function AppLayout() {
               className={({ isActive }) =>
                 `group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-primary-600/20 to-secondary-600/10 text-white border border-primary-500/40 shadow-lg shadow-primary-500/20'
+                    ? 'bg-gradient-to-r from-primary-500/20 to-secondary-500/10 text-primary-300 border border-primary-400/40 shadow-lg shadow-primary-500/20'
                     : 'text-slate-400 hover:text-white hover:bg-surface-elevated border border-transparent hover:border-surface-border'
                 }`
               }
@@ -74,7 +74,7 @@ export function AppLayout() {
                 <>
                   <Icon 
                     size={20} 
-                    className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}
+                    className={`transition-all duration-200 ${isActive ? 'scale-110 text-primary-400 filter drop-shadow-[0_0_5px_rgba(0,240,255,0.5)]' : 'group-hover:scale-110 text-slate-400 group-hover:text-slate-200'}`}
                   />
                   {label}
                 </>
@@ -82,12 +82,12 @@ export function AppLayout() {
             </NavLink>
           ))}
         </nav>
-
+ 
         {/* Stats Quick View */}
         <div className="p-4 border-t border-surface-border space-y-3">
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span>Estadísticas</span>
-            <Badge variant="primary" size="sm">{stats.streakDays}d racha</Badge>
+            <Badge variant="primary" size="sm" className="border-primary-500/30 text-primary-300">{stats.streakDays}d racha</Badge>
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div className="bg-surface-elevated rounded-lg p-2 border border-surface-border">
@@ -100,19 +100,19 @@ export function AppLayout() {
             </div>
           </div>
         </div>
-
+ 
         {/* XP Panel */}
-        <div className="p-4 border-t border-surface-border bg-gradient-to-br from-primary-600/5 to-secondary-600/5">
+        <div className="p-4 border-t border-surface-border bg-gradient-to-br from-primary-500/5 to-secondary-500/5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center shadow-lg shadow-primary-500/30 border-2 border-primary-400/30">
-              <Star className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center shadow-lg shadow-accent-500/30 border-2 border-accent-400/40 shrink-0">
+              <Star className="w-6 h-6 text-slate-950 fill-slate-950" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-white">Nivel {level}</span>
-                <Badge variant="primary" size="sm">{levelInfo.name}</Badge>
+                <Badge variant="accent" size="sm" className="font-bold border-accent-500/30 text-accent-300 bg-accent-500/10 shadow-[0_0_10px_rgba(245,158,11,0.15)]">{levelInfo.name}</Badge>
               </div>
-              <div className="text-xs text-slate-400 font-mono">{xp.toLocaleString()} XP</div>
+              <div className="text-xs text-slate-400 font-mono mt-0.5 xp-badge-prize">{xp.toLocaleString()} XP</div>
             </div>
           </div>
           

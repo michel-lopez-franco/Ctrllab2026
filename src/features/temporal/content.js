@@ -15,17 +15,17 @@ export const moduleContent = {
       title: 'Métricas de desempeño',
       content: `Cuando aplicamos un escalón unitario a un sistema de control, evaluamos su calidad mediante cuatro métricas estándar.
 
-**Tiempo de subida (tᵣ)** — tiempo en que la salida pasa del 10% al 90% de su valor final. Indica qué tan rápido responde el sistema.
+**Tiempo de subida ($t_r$)** — tiempo en que la salida pasa del 10% al 90% de su valor final. Indica qué tan rápido responde el sistema.
 
-**Tiempo de establecimiento (tₛ)** — último instante en que la salida sale de la banda del ±2% alrededor del valor final. Indica cuándo el transitorio ha "terminado".
+**Tiempo de establecimiento ($t_s$)** — último instante en que la salida sale de la banda del $\\pm 2\\%$ alrededor del valor final. Indica cuándo el transitorio ha "terminado".
 
-**Sobreimpulso (Mp)** — pico máximo por encima del valor final, expresado en porcentaje:
+**Sobreimpulso ($M_p$)** — pico máximo por encima del valor final, expresado en porcentaje:
 
-> Mp = (y_max − y_∞) / y_∞ × 100 %
+> $$ M_p = \\frac{y_{max} - y_\\infty}{y_\\infty} \\times 100\\% $$
 
-**Error en estado estacionario (ess)** — diferencia entre la referencia y la salida una vez que el transitorio desaparece:
+**Error en estado estacionario ($e_{ss}$)** — diferencia entre la referencia y la salida una vez que el transitorio desaparece:
 
-> ess = |1 − y_∞| × 100 %
+> $$ e_{ss} = |1 - y_\\infty| \\times 100\\% $$
 
 Estas cuatro métricas a menudo están en conflicto: reducir el tiempo de subida suele aumentar el sobreimpulso. El reto del diseñador de control es encontrar el balance adecuado para la aplicación.`,
     },
@@ -34,70 +34,70 @@ Estas cuatro métricas a menudo están en conflicto: reducir el tiempo de subida
       title: 'Sistemas de primer orden',
       content: `Un sistema de primer orden tiene la función de transferencia:
 
-> G(s) = K / (τs + 1)
+> $$ G(s) = \\frac{K}{\\tau s + 1} $$
 
-Donde **K** es la ganancia estática y **τ** es la constante de tiempo.
+Donde $K$ es la ganancia estática y $\\tau$ es la constante de tiempo.
 
-**Respuesta al escalón:** y(t) = K · (1 − e^(−t/τ))
+**Respuesta al escalón:** $y(t) = K(1 - e^{-t/\\tau})$
 
 Propiedades importantes:
-- En t = τ, la salida alcanza el **63.2%** del valor final (K)
-- En t = 2τ → 86.5%; en t = 3τ → 95%; en t = 4τ → 98.2%
-- Se considera establecido en t ≈ 4τ (criterio del 2%)
+- En $t = \\tau$, la salida alcanza el **63.2%** del valor final ($K$)
+- En $t = 2\\tau \\to 86.5\\%$; en $t = 3\\tau \\to 95\\%$; en $t = 4\\tau \\to 98.2\\%$
+- Se considera establecido en $t \\approx 4\\tau$ (criterio del 2%)
 - **No hay sobreimpulso** en sistemas de primer orden puros
-- La pendiente inicial de la respuesta es K/τ
+- La pendiente inicial de la respuesta es $K/\\tau$
 
 **Efecto de los parámetros:**
-- Aumentar **τ** hace la respuesta más lenta (mayor tₛ)
-- Aumentar **K** sube el valor final pero no cambia la velocidad relativa
-- El tiempo de subida aproximado es tᵣ ≈ 2.2τ
+- Aumentar $\\tau$ hace la respuesta más lenta (mayor $t_s$)
+- Aumentar $K$ sube el valor final pero no cambia la velocidad relativa
+- El tiempo de subida aproximado es $t_r \\approx 2.2\\tau$
 
-**Ejemplo:** Un termómetro con τ = 5s tardará ≈ 20s en estabilizarse ante un cambio brusco de temperatura.`,
+**Ejemplo:** Un termómetro con $\\tau = 5\\text{ s}$ tardará $\\approx 20\\text{ s}$ en estabilizarse ante un cambio brusco de temperatura.`,
     },
     {
       id: 'segundo-orden',
       title: 'Sistemas de segundo orden',
       content: `La forma estándar de un sistema de segundo orden es:
 
-> G(s) = ωₙ² / (s² + 2ζωₙs + ωₙ²)
+> $$ G(s) = \\frac{\\omega_n^2}{s^2 + 2\\zeta\\omega_n s + \\omega_n^2} $$
 
 Con dos parámetros fundamentales:
-- **ωₙ** (rad/s) — frecuencia natural: qué tan rápido oscilaría el sistema sin amortiguamiento
-- **ζ** (adimensional) — coeficiente de amortiguamiento: cuánta energía disipa el sistema
+- $\\omega_n$ (rad/s) — frecuencia natural: qué tan rápido oscilaría el sistema sin amortiguamiento
+- $\\zeta$ (adimensional) — coeficiente de amortiguamiento: cuánta energía disipa el sistema
 
-**Los polos** del sistema son: s₁,₂ = −ζωₙ ± ωₙ√(ζ²−1)
+**Los polos** del sistema son: $s_{1,2} = -\\zeta\\omega_n \\pm \\omega_n\\sqrt{\\zeta^2-1}$
 
 **Regímenes de amortiguamiento:**
 
 | Condición | Régimen | Respuesta |
 |-----------|---------|-----------|
-| 0 < ζ < 1 | Subamortiguado | Oscilatoria con decaimiento exponencial |
-| ζ = 1 | Críticamente amortiguado | Más rápida sin oscilar |
-| ζ > 1 | Sobreamortiguado | Exponencial lenta, sin oscilación |
-| ζ = 0 | Sin amortiguamiento | Oscilación sostenida (inestable en lazo abierto) |
+| $0 < \\zeta < 1$ | Subamortiguado | Oscilatoria con decaimiento exponencial |
+| $\\zeta = 1$ | Críticamente amortiguado | Más rápida sin oscilar |
+| $\\zeta > 1$ | Sobreamortiguado | Exponencial lenta, sin oscilación |
+| $\\zeta = 0$ | Sin amortiguamiento | Oscilación sostenida (inestable en lazo abierto) |
 
-**Fórmulas para el caso subamortiguado (0 < ζ < 1):**
+**Fórmulas para el caso subamortiguado ($0 < \\zeta < 1$):**
 
-> Mp = e^(−πζ/√(1−ζ²)) × 100 %
-> tᵣ ≈ (1.8) / ωₙ
-> tₛ ≈ 4 / (ζωₙ)   (criterio 2%)
+> $$ M_p = e^{-\\frac{\\pi\\zeta}{\\sqrt{1-\\zeta^2}}} \\times 100\\% $$
+> $$ t_r \\approx \\frac{1.8}{\\omega_n} $$
+> $$ t_s \\approx \\frac{4}{\\zeta\\omega_n} \\quad (\\text{criterio del } 2\\%) $$
 
-Nota: tₛ depende principalmente de **ζωₙ** (parte real del polo). Para establecimiento rápido, necesitamos ζωₙ grande.`,
+Nota: $t_s$ depende principalmente de $\\zeta\\omega_n$ (parte real del polo). Para establecimiento rápido, necesitamos $\\zeta\\omega_n$ grande.`,
     },
     {
       id: 'polos-zeros',
       title: 'Efecto de polos y ceros',
       content: `La ubicación de los polos en el plano complejo determina completamente el carácter de la respuesta temporal.
 
-**Polos reales negativos** (−a) → término exponencial e^(−at): decae más rápido cuanto más alejado del origen.
+**Polos reales negativos** ($-a$) $\\to$ término exponencial $e^{-at}$: decae más rápido cuanto más alejado del origen.
 
-**Polos complejos conjugados** (−σ ± jω_d):
-- σ = ζωₙ controla la velocidad de decaimiento del envolvente
-- ω_d = ωₙ√(1−ζ²) es la **frecuencia amortiguada** (frecuencia real de oscilación)
+**Polos complejos conjugados** ($-\\sigma \\pm j\\omega_d$):
+- $\\sigma = \\zeta\\omega_n$ controla la velocidad de decaimiento del envolvente
+- $\\omega_d = \\omega_n\\sqrt{1-\\zeta^2}$ es la **frecuencia amortiguada** (frecuencia real de oscilación)
 
 **Polo dominante:** Si hay varios polos, el de menor parte real en valor absoluto domina la respuesta (los demás decaen mucho más rápido).
 
-**Efecto de un cero:** Un cero en s = −z agrega un término derivativo que:
+**Efecto de un cero:** Un cero en $s = -z$ agrega un término derivativo que:
 - Aumenta el sobreimpulso si el cero está en el semiplano izquierdo (cero de fase mínima)
 - Puede hacer que la respuesta vaya inicialmente "hacia atrás" si el cero es positivo (cero de no-mínima fase)
 
@@ -108,19 +108,19 @@ Nota: tₛ depende principalmente de **ζωₙ** (parte real del polo). Para est
       title: 'Error en estado estacionario',
       content: `El error en estado estacionario depende del **tipo de sistema** (número de integradores en lazo abierto) y del tipo de entrada.
 
-**Teorema del valor final:** Si el sistema es estable, el valor final de y(t) es:
+**Teorema del valor final:** Si el sistema es estable, el valor final de $y(t)$ es:
 
-> y_∞ = lim_(s→0) s·Y(s) = lim_(s→0) s · G(s)/(1+G(s)) · R(s)
+> $$ y_\\infty = \\lim_{s \\to 0} s Y(s) = \\lim_{s \\to 0} s \\frac{G(s)}{1 + G(s)} R(s) $$
 
-Para un sistema en lazo abierto G(s) con realimentación unitaria:
+Para un sistema en lazo abierto $G(s)$ con realimentación unitaria:
 
 | Tipo | Escalón | Rampa | Parábola |
 |------|---------|-------|----------|
-| Tipo 0 | ess = 1/(1+Kp) | ∞ | ∞ |
-| Tipo 1 | ess = 0 | 1/Kv | ∞ |
-| Tipo 2 | ess = 0 | ess = 0 | 1/Ka |
+| Tipo 0 | $e_{ss} = \\frac{1}{1+K_p}$ | $\\infty$ | $\\infty$ |
+| Tipo 1 | $e_{ss} = 0$ | $e_{ss} = \\frac{1}{K_v}$ | $\\infty$ |
+| Tipo 2 | $e_{ss} = 0$ | $e_{ss} = 0$ | $e_{ss} = \\frac{1}{K_a}$ |
 
-Donde Kp = G(0), Kv = lim_(s→0) s·G(s), Ka = lim_(s→0) s²·G(s).
+Donde $K_p = G(0)$, $K_v = \\lim_{s \\to 0} s G(s)$, $K_a = \\lim_{s \\to 0} s^2 G(s)$.
 
 **Conclusión práctica:** Para eliminar el error ante una referencia escalón, necesitamos al menos un integrador en el controlador (acción integral — la "I" del PID).`,
     },
