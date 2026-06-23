@@ -1,0 +1,48 @@
+{
+  "name": "ctrllab",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Plataforma gamificada para el aprendizaje de control automático",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.1",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.21.0",
+    "mathjs": "^15.2.0",
+    "plotly.js-dist-min": "^3.6.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-plotly.js": "^4.0.0",
+    "react-router-dom": "^7.18.0",
+    "recharts": "^3.8.1",
+    "tailwindcss": "^4.3.1",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.8.4",
+    "vite": "^8.0.12",
+    "vitest": "^4.1.9"
+  }
+}
